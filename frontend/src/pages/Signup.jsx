@@ -25,7 +25,11 @@ export default function Signup() {
       toast.success("Account created successfully!");
       navigate("/dashboard");
     } catch (err) {
-      setError(err.response?.data?.message || "Signup failed. Please try again.");
+      const errorMsg = err.response?.data?.message 
+        || (err.response?.data?.errors && err.response.data.errors[0]?.msg)
+        || err.message 
+        || "Signup failed. Please try again.";
+      setError(errorMsg);
     } finally {
       setLoading(false);
     }
